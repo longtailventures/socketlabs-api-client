@@ -15,6 +15,6 @@
             "LongTailVentures\\SocketLabsApiClient\\": "src"
             
         }
-    }
+    },
     "minimum-stability" : "dev"
 }
