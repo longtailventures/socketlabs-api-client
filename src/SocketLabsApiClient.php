@@ -40,7 +40,7 @@ class SocketLabsApiClient
      */
     public function setSubject($subject)
     {
-        $this->_messagesData['Subject'] = $subject;
+        $this->_messageData['Subject'] = $subject;
     }
 
 
@@ -108,10 +108,10 @@ class SocketLabsApiClient
      */
     public function setToAddress($name, $email)
     {
-        $this->_messageData['To'] = [
+        $this->_messageData['To'] = [[
             'EmailAddress' => $email,
             'FriendlyName' => $name
-        ];
+        ]];
     }
 
 
