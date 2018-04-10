@@ -26,8 +26,6 @@ class SocketLabsApiClient
 
         $this->_messageData = [
             'Subject' => '',
-            'TextBody' => '',
-            'HtmlBody' => '',
             'To' => '',
             'From' => '',
             'ReplyTo' => '',
