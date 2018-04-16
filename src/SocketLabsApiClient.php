@@ -120,8 +120,11 @@ class SocketLabsApiClient
      * @param string $email
      */
     public function addCcAddress($name, $email)
-    {
-        $this->_messageData['Cc'] = [
+    {   
+        if (!isset($this->_messageData['Cc']))
+            $this->_messageData['Cc'] = [];
+
+        $this->_messageData['Cc'][] = [
             'EmailAddress' => $email,
             'FriendlyName' => $name
         ];
