@@ -8,6 +8,7 @@ class SocketLabsApiClient
 {
     private $_apiKey, $_serverId;
     private $_messageData;
+    private $_socketLabsApiResponse;
 
     const API_URL = 'https://inject.socketlabs.com/api/v1/email';
 
@@ -30,6 +31,8 @@ class SocketLabsApiClient
             'From' => '',
             'ReplyTo' => '',
         ];
+
+        $this->_socketLabsApiResponse = null;
     }
 
 
@@ -120,7 +123,7 @@ class SocketLabsApiClient
      * @param string $email
      */
     public function addCcAddress($name, $email)
-    {   
+    {
         if (!isset($this->_messageData['Cc']))
             $this->_messageData['Cc'] = [];
 
@@ -153,6 +156,8 @@ class SocketLabsApiClient
      */
     public function send()
     {
+        $this->_socketLabsApiResponse = null;
+
         // re: https://github.com/socketlabs/email-on-demand-examples/blob/master/PHP/Injection%20API/http_injection_merge.php
         $data = new stdClass();
         $data->ServerId = $this->_serverId;
@@ -170,8 +175,19 @@ class SocketLabsApiClient
         $result = curl_exec($ch);
         curl_close($ch);
 
-        $result = json_decode($result);
+        $this->_socketLabsApiResponse = json_decode($result);
 
-        return $result->ErrorCode === 'Success';
+        return $this->_socketLabsApiResponse->ErrorCode === 'Success';
+    }
+
+
+    /**
+     * returns last socketlabs api response
+     *
+     * @return object|null $lastResponse
+     */
+    public function getLastSentStatusMessage()
+    {
+        return $this->_socketLabsApiResponse;
     }
 }
